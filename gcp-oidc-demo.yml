@@ -1,0 +1,26 @@
+name: GCP OpenID Connect Demo Workflow
+on:
+  workflow_dispatch: # Allows manual triggering for demo purposes
+
+jobs:
+  gcp-connection-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Authenticate to GCP using Workload Identity Federation
+        id: google-auth
+        uses: google-github-actions/auth@v2 # Or use the latest version: v3, v4 etc.
+        with:
+          workload_identity_provider: projects/42377534563/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-oidc-provider
+          service_account: github-actions-demo-sa@driven-crane-456705-p3.iam.gserviceaccount.com
+
+      - name: Run Python script to get GCP Project Info
+        shell: bash
+        run: python gcp_project_info.py
+
+      - name: Output Success Message
+        if: steps.google-auth.outcome == 'success' # Only run if authentication was successful
+        shell: bash
+        run: echo "Successfully demonstrated GCP connection using OpenID Connect!"
