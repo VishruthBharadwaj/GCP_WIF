@@ -17,7 +17,7 @@ jobs:
         id: google-auth
         uses: google-github-actions/auth@v2 # Or use the latest version: v3, v4 etc.
         with:
-          workload_identity_provider: projects/42377534563/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-oidc-provider
+          workload_identity_provider: projects/42377534563/locations/global/workloadIdentityPools/github-actions-pool/providers/gh-oidc-prov
           service_account: github-actions-demo-sa@driven-crane-456705-p3.iam.gserviceaccount.com
 
       - name: Run Python script to get GCP Project Info
